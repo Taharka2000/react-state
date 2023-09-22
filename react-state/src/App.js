@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 class App extends Component {
   constructor(props) {
+    //les informations de la personnes
     super(props);
     this.state = {
       person: {
@@ -13,28 +14,33 @@ class App extends Component {
       interval: 0,
     };
   }
+    //fonction du button qui permet de masquer et desmasquer les caracteristiques de la personne
   toglee = () => {
     this.setState((prevent) => ({
       show: !prevent.show
     }))
   }
+  // Mettre à jour l'intervalle toutes les 1000 ms (1 seconde)
   componentDidMount() {
     this.intervalId = setInterval(() => {
       this.setState((prevent) => ({
         interval: prevent.interval + 1,
       }));
-    }, 1000); // Mettre à jour l'intervalle toutes les 1000 ms (1 seconde)
+    }, 1000);
   }
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
   render() {
+     //recuperation des donnees de la personne avec les props
     const { fullName, bio, image, profession } = this.state.person;
     return (
       <>
+       //parti image et stylisation 
        <div className="flex justify-center">
                   <img className="w-[10%] " src={image} alt="" />
                 </div>
+      //caracteristiques de la personne 
         <div className="flex flex-col items-center">
           {
             this.state.show && (
@@ -47,6 +53,7 @@ class App extends Component {
               </div>
             )
           }
+            //boutton qui permet de montrer et de masquer les infos de la personne
           <div className="text-center">
             <button className="ml-[18px]  middle none center rounded-lg bg-emerald-900 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-light="true" onClick={this.toglee}>
@@ -56,6 +63,7 @@ class App extends Component {
             </button>
           </div>
         </div>
+               // le set interval
         <p>Time Interval Since Mount: {this.state.interval} seconds</p>
       </>
     )
